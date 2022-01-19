@@ -1,9 +1,29 @@
 const router = require('express').Router();
-const { Review } = require('../../models');
+//should export all three with the index.js in model folder
+    // const {Review, User, Service}   = require('../../models');
+    
+const Review = require('../../models/Review');
+const User = require('../../models/User');
+const Service = require('../../models/Service')
 
 //get all comments
 router.get('/', (req, res) => {
-    Review.findAll()
+    Review.findAll({
+      attributes: [
+        'title',
+        'review_text'
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ['first_name', 'last_name']
+    },
+        {
+          model: Service,
+          attributes: ['service_name']
+    }
+  ]
+})
       .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
         console.log(err);
