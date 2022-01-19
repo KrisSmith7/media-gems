@@ -1,10 +1,30 @@
 const router = require('express').Router();
-const { Review } = require('../../models');
+//should export all three with the index.js in model folder
+    // const {Review, User, Service}   = require('../../models');
+    
+const Review = require('../../models/Review');
+const User = require('../../models/User');
+const Service = require('../../models/Service')
 
 //get all comments
 router.get('/', (req, res) => {
-    Review.findAll()
-      .then(dbCommentData => res.json(dbCommentData))
+    Review.findAll({
+      attributes: [
+        'title',
+        'review_text'
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ['first_name', 'last_name']
+    },
+        {
+          model: Service,
+          attributes: ['service_name']
+    }
+  ]
+})
+      .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -13,13 +33,14 @@ router.get('/', (req, res) => {
 
 //create a comment
 router.post('/', (req, res) => {
-    // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
+    // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
     Review.create({
-      comment_text: req.body.comment_text,
-      user_id: req.body.user_id,
-      post_id: req.body.post_id
+      title: req.body.title,
+      review_text: req.body.review_text,
+      // user_id: req.session.user_id,
+      service_id: req.body.service_id // can we change this to make a selection of the values instead of id
     })
-      .then(dbCommentData => res.json(dbCommentData))
+      .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
         console.log(err);
         res.status(400).json(err);
@@ -33,12 +54,12 @@ router.delete('/:id', (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbCommentData => {
-        if (!dbCommentData) {
-          res.status(404).json({ message: 'No comment found with this id!' });
+      .then(dbReviewData => {
+        if (!dbReviewData) {
+          res.status(404).json({ message: 'No review found with this id!' });
           return;
         }
-        res.json(dbCommentData);
+        res.json(dbReviewData);
       })
       .catch(err => {
         console.log(err);
