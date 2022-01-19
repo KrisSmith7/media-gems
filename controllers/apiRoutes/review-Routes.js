@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { Review } = require('../../models');
+const { Reviews } = require('../../models');
 
 //get all comments
 router.get('/', (req, res) => {
-    Review.findAll()
+    Reviews.findAll()
       .then(dbCommentData => res.json(dbCommentData))
       .catch(err => {
         console.log(err);
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 //create a comment
 router.post('/', (req, res) => {
     // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
-    Review.create({
+    Reviews.create({
       comment_text: req.body.comment_text,
       user_id: req.body.user_id,
       post_id: req.body.post_id
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
 //delete a comment
 router.delete('/:id', (req, res) => {
-    Review.destroy({
+    Reviews.destroy({
       where: {
         id: req.params.id
       }
