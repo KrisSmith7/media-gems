@@ -3,10 +3,10 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create class
-class Review extends Model {}
+class User extends Model {}
 
 // create columns for table
-Review.init(
+User.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -62,9 +62,9 @@ Review.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'comment'
+        modelName: 'user'
     }
 );
 
 // export
-module.exports = Comment;
+module.exports = User;
