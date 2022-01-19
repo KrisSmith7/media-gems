@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { Reviews } = require('../../models');
+const { Review } = require('../../models');
 
 //get all comments
 router.get('/', (req, res) => {
-    Reviews.findAll()
-      .then(dbCommentData => res.json(dbCommentData))
+    Review.findAll()
+      .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -13,13 +13,13 @@ router.get('/', (req, res) => {
 
 //create a comment
 router.post('/', (req, res) => {
-    // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
-    Reviews.create({
-      comment_text: req.body.comment_text,
+    // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
+    Review.create({
+      review_text: req.body.review_text,
       user_id: req.body.user_id,
       post_id: req.body.post_id
     })
-      .then(dbCommentData => res.json(dbCommentData))
+      .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
         console.log(err);
         res.status(400).json(err);
@@ -28,17 +28,17 @@ router.post('/', (req, res) => {
 
 //delete a comment
 router.delete('/:id', (req, res) => {
-    Reviews.destroy({
+    Review.destroy({
       where: {
         id: req.params.id
       }
     })
-      .then(dbCommentData => {
-        if (!dbCommentData) {
-          res.status(404).json({ message: 'No comment found with this id!' });
+      .then(dbReviewData => {
+        if (!dbReviewData) {
+          res.status(404).json({ message: 'No review found with this id!' });
           return;
         }
-        res.json(dbCommentData);
+        res.json(dbReviewData);
       })
       .catch(err => {
         console.log(err);
