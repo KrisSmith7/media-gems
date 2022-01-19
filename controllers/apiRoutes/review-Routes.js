@@ -10,19 +10,20 @@ const Service = require('../../models/Service')
 router.get('/', (req, res) => {
     Review.findAll({
       attributes: [
+        'id',
         'title',
         'review_text'
       ],
-      include: [
-        {
-          model: User,
-          attributes: ['first_name', 'last_name']
-    },
-        {
-          model: Service,
-          attributes: ['service_name']
-    }
-  ]
+  //     include: [
+  //       {
+  //         model: User,
+  //         attributes: ['first_name', 'last_name']
+  //   },
+  //       {
+  //         model: Service,
+  //         attributes: ['service_name']
+  //   }
+  // ]
 })
       .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
