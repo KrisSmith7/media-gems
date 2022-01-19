@@ -35,9 +35,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
     Review.create({
+      title: req.body.title,
       review_text: req.body.review_text,
-      user_id: req.body.user_id,
-      post_id: req.body.post_id
+      // user_id: req.session.user_id,
+      service_id: req.body.service_id // can we change this to make a selection of the values instead of id
     })
       .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {

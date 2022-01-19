@@ -1,10 +1,7 @@
 const router = require('express').Router();
 
-const reviewRoutes = require('./apiRoutes/review-Routes');
-// const mediaServiceRoutes = require('./apiRoutes/media-service');
+const apiRoutes = require('./apiRoutes');
 
-router.use('/reviews', reviewRoutes);
-// router.use('/service', mediaServiceRoutes);
-
+router.use('/api', apiRoutes);
 
 module.exports = router;
