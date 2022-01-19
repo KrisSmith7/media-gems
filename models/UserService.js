@@ -3,10 +3,10 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create class
-class Connect extends Model {}
+class UserService extends Model {}
 
 // create columns for table
-Connect.init(
+UserService.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -33,9 +33,9 @@ Connect.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'connect'
+        modelName: 'userService'
     }
 );
 
 // export
-module.exports = Connect;
+module.exports = UserService;

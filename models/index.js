@@ -3,9 +3,7 @@ const Reviews = require('./Review');
 const User = require('./User');
 const Services = require('./Service');
 const Visited = require('./Visited');
-const Connect = require('./UserConnectService');
-const { connect } = require('http2');
-
+const UserService = require('./UserService');
 
 // create associations
 
@@ -21,12 +19,12 @@ Reviews.belongsTo(User, {
 
 // Services belong to many Users
 Services.belongsToMany(User, {
-    through: Connect,
+    through: UserService,
 })
 
 // Users belong to many Services
 User.belongsToMany(Services, {
-    through: Connect,
+    through: UserService,
 })
 
 // A last visited date belongs to a single user
@@ -45,6 +43,6 @@ module.exports = {
     User,
     Services,
     Visited,
-    Connect
+    UserService
 };
   
