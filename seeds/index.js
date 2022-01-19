@@ -1,21 +1,20 @@
-const seedReviews = require('./review-seeds');
-const seedMediaServices = require('./media-service-seeds');
 const seedUsers = require('./user-seeds');
+const seedReviews = require('./review-seeds');
+const seedServices = require('./service-seeds');
 
 const sequelize = require('../config/connection');
 
 const seedAll = async () => {
   await sequelize.sync({ force: true });
-  console.log('\n----- DATABASE SYNCED -----\n');
-
+  console.log('--------------');
   await seedUsers();
-  console.log('\n----- USERS SEEDED -----\n');
-
-  await seedMediaServices();
-  console.log('\n----- MEDIA SERVICES SEEDED -----\n');
+  console.log('--------------');
+  
+    await seedServices();
+    console.log('--------------');
 
   await seedReviews();
-  console.log('\n----- REVIEWS SEEDED -----\n');
+  console.log('--------------');
 
   process.exit(0);
 };
