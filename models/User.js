@@ -42,20 +42,20 @@ User.init(
                 len: [6]
             }
         },
-        last_visit: {
-            type: DataTypes.DATEONLY,
-            references: {
-                model: 'visited',
-                key: 'id'
-            }
-        },
-        reviews: {
-            type: DataTypes.STRING,
-            references: {
-                model: 'review',
-                key: 'id'
-            }
-        }
+        // last_visit: {
+        //     type: DataTypes.DATEONLY,
+        //     references: {
+        //         model: 'visited',
+        //         key: 'id'
+        //     }
+        // },
+        // reviews: {
+        //     type: DataTypes.STRING,
+        //     references: {
+        //         model: 'review',
+        //         key: 'id'
+        //     }
+        // }
 
     },
     {

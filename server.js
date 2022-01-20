@@ -1,6 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
+const sequelize = require("./config/connection");
+// const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const hbs = exphbs.create({});
 
@@ -16,6 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./controllers'));
 
 // Start server to begin listening
-app.listen(PORT, () => {
-  console.log(`Server listening on: http://localhost:${PORT}`);
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });
