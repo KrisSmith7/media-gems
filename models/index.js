@@ -17,13 +17,13 @@ Reviews.belongsTo(User, {
     foreignKey: 'user_id',
 })
 
-// Services belong to many Users
+// Services belong to many Reviews
 Services.belongsToMany(Reviews, {
     through: ReviewService,
 })
 
-// Users belong to many Services
-Reviews.belongsToMany(Services, {
+// Reviews belong to a single Service
+Reviews.belongsTo(Services, {
     through: ReviewService,
 })
 
@@ -33,7 +33,7 @@ Visited.belongsTo(User, {
 })
 
 // Users can have many last visited dates
-User.hasMany(Visited, {
+User.hasOne(Visited, {
     foreignKey: 'last_visited'
 })
 
@@ -43,6 +43,6 @@ module.exports = {
     User,
     Services,
     Visited,
-    UserService
+    ReviewService
 };
   

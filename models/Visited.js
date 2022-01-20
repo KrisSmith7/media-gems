@@ -15,7 +15,7 @@ Visited.init(
             autoIncrement: true
         },
         last_visited_date: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
         } 
     },
     {
