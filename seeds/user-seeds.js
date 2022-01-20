@@ -1,4 +1,3 @@
-// const sequelize = require('../config/connection');
 const User = require('../models/User');
 
 const userdata = [
@@ -26,14 +25,14 @@ const userdata = [
   {
     first_name: 'Daniel',
     last_name: 'Stanmer',
-    username: 'DannyBoy',
+    user_name: 'DannyBoy',
     email: 'ihellier3@goo.ne.jp',
     password: 'password123'
   },
   {
     first_name: 'Nate',
     last_name: 'Hannon',
-    username: 'hannon',
+    user_name: 'hannon',
     email: 'gmidgley4@weather.com',
     password: 'password123'
   }
