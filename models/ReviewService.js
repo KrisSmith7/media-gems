@@ -14,15 +14,15 @@ UserService.init(
             primaryKey: true,
             autoIncrement: true
         },
-        user_id: {
+        review_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'user',
+                model: 'review',
                 key: 'id'
             }
         },
         service_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             references: {
                 model: 'service',
                 key: 'id'

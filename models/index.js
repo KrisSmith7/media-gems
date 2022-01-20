@@ -3,7 +3,7 @@ const Reviews = require('./Review');
 const User = require('./User');
 const Services = require('./Service');
 const Visited = require('./Visited');
-const UserService = require('./UserService');
+const ReviewService = require('./ReviewService');
 
 // create associations
 
@@ -18,13 +18,13 @@ Reviews.belongsTo(User, {
 })
 
 // Services belong to many Users
-Services.belongsToMany(User, {
-    through: UserService,
+Services.belongsToMany(Reviews, {
+    through: ReviewService,
 })
 
 // Users belong to many Services
-User.belongsToMany(Services, {
-    through: UserService,
+Reviews.belongsToMany(Services, {
+    through: ReviewService,
 })
 
 // A last visited date belongs to a single user
