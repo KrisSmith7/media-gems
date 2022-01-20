@@ -11,11 +11,11 @@ const seedAll = async () => {
   await seedUsers();
   console.log('--------------');
   
-  //await seedServices();
-  //console.log('--------------');
+  await seedServices();
+  console.log('--------------');
 
-  //await seedReviews();
-  //console.log('--------------');
+  await seedReviews();
+  console.log('--------------');
 
   process.exit(0);
 };
