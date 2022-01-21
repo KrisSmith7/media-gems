@@ -18,17 +18,7 @@ router.get('/:id', (req, res) => {
     attributes: { exclude: ['password'] },
     where: {
       id: req.params.id
-    },
-    include: [
-      {
-        model: Review,
-        attributes: ['id', 'title', 'review_text', 'user_id', 'service_id']
-      },
-      {
-        model: Visited,
-        attributes: ['id', 'user_id', 'last_visit'],
-      }
-    ]
+    }
   })
     .then(userData => {
       if (!userData) {
@@ -44,11 +34,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+  // expects {first_name: 'Alex' last_name: 'Monde' user_name: 'A Monde', email: 'nwestnedge0@cbc.ca', password: 'password1234'}
   User.create({
-    first_name:req.body.first_name,
-    last_name:req.body.last_name,
-    username: req.body.username,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    user_name: req.body.user_name,
     email: req.body.email,
     password: req.body.password
   })
@@ -60,7 +50,7 @@ router.post('/', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+  // expects {email: 'nwestnedge0@cbc.ca', password: 'password1234'}
   User.findOne({
     where: {
       email: req.body.email
@@ -77,13 +67,13 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
+    // TODO: Add last_visited date to User table here??
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
 });
 
 router.put('/:id', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
