@@ -13,6 +13,9 @@ router.get('/login', (req, res) => {
   router.get('/reviews', (req, res) => {
     res.render('reviews');
   });
+  router.get('/user', (req, res) => {
+    res.render('user');
+  });
 
-  
+
 module.exports = router;

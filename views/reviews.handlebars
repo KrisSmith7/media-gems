@@ -1,10 +1,39 @@
-<article class="post">
-  <div class="title">
-    <p>{{title}}</p>
-    <span>({{review_text}})</span>
-    <p>Streaming Service: <span>{{service.service_name}}</span></p>
+<div class="flex flex-col mt-8">
+  <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+    <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <th
+              class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Title</th>
+            <th
+              class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Streaming Service</th>
+            <th
+              class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Review
+              <!--may be able to preview content here, create get route for single review, possible comments? -->
+            </th>
+            <th
+              class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              User</th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white">
+          
+<!--partials template below - currently not working -->
+          {{#if reviews.length}}
+          {{#each reviews as |review|}}
+          {{> review-info review}}
+          {{/each}}
+          {{/if}}
+
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="meta">
-    {{!-- review by {{user.username}} on {{format_date created_at}}| --}}
-  </div>
-</article>
+</div>
+</div>

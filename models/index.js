@@ -3,7 +3,7 @@ const Reviews = require('./Review');
 const User = require('./User');
 const Services = require('./Service');
 const Visited = require('./Visited');
-// const ReviewService = require('./ReviewService');
+const ReviewService = require('./ReviewService');
 
 // create associations
 
