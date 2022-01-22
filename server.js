@@ -10,6 +10,9 @@ const hbs = exphbs.create({});
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Set Handlebars as the default template engine.
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -19,5 +22,7 @@ app.use(require('./controllers'));
 
 // Start server to begin listening
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+  app.listen(PORT, () => {
+    console.log(`Server listening on: http://localhost:${PORT}`);
+  });
 });
