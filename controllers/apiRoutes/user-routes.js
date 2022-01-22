@@ -35,18 +35,15 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // expects {first_name: 'Alex' last_name: 'Monde' user_name: 'A Monde', email: 'nwestnedge0@cbc.ca', password: 'password1234'}
-  User.create({
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    user_name: req.body.user_name,
-    email: req.body.email,
-    password: req.body.password
+  console.log("in router post req: " + req.body);
+  User.create(req.body)
+  .then((tag) => {
+    res.status(200).json(tag);
   })
-    .then(userData => res.json(userData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  .catch((err) => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.post('/login', (req, res) => {
