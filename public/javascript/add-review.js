@@ -3,6 +3,7 @@ async function newFormHandler(event) {
   
     const title = document.querySelector('input[name="review-title"]').value;
     const review_text = document.querySelector('input[name="review-text"]').value;
+    // const user_id = document.querySelector('')
   
 // is review text appropriate for the variable? => just_tech_news uses a post url here instead
 
@@ -18,9 +19,7 @@ async function newFormHandler(event) {
     });
   
     if (response.ok) {
-        // are we implementing the dashboard? 
-            // if not, change to '/'
-        document.location.replace('/dashboard');
+        document.location.replace('/homepage');
     } 
     else {
         alert(response.statusText);

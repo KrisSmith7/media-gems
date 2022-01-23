@@ -14,9 +14,8 @@ async function loginFormHandler(event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        // are we implementing a dashboard? => if not, change to '/' or '/homepage'
         if (response.ok) {
-            document.location.replace('/dashboard/');
+            document.location.replace('/homepage/');
         } 
         else {
             alert(response.statusText);
