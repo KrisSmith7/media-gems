@@ -81,16 +81,27 @@ router.post('/login', (req, res) => {
       return;
     }
 
-    // req.session.save(() => {
-    //   req.session.user_id = dbUserData.id;
-    //   req.session.username = dbUserData.username;
-    //   req.session.loggedIn = true;
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.username = userData.user_name;
+      req.session.loggedIn = true;
     // TODO: Add last_visited date to User table here??
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
 });
-// });
+});
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
+});
 
 router.put('/:id', (req, res) => {
 
