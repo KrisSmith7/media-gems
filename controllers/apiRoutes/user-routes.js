@@ -33,10 +33,26 @@ router.get('/:id', (req, res) => {
     });
 });
 
+
 router.post('/', (req, res) => {
   // expects {first_name: 'Alex' last_name: 'Monde' user_name: 'A Monde', email: 'nwestnedge0@cbc.ca', password: 'password1234'}
   console.log("in router post req: " + req.body);
-  User.create(req.body)
+  User.create({
+    first_name:req.body.firstName,
+    last_name:req.body.lastName,
+    user_name: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  })
+  // .then(dbUserData => {
+  //   req.session.save(() => {
+  //     req.session.user_id = dbUserData.id;
+  //     req.session.username = dbUserData.username;
+  //     req.session.loggedIn = true;
+
+  //     res.json(dbUserData);
+  //   });
+  // })
   .then((tag) => {
     res.status(200).json(tag);
   })
@@ -64,11 +80,17 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
+
+    // req.session.save(() => {
+    //   req.session.user_id = dbUserData.id;
+    //   req.session.username = dbUserData.username;
+    //   req.session.loggedIn = true;
     // TODO: Add last_visited date to User table here??
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
 });
+// });
 
 router.put('/:id', (req, res) => {
 
