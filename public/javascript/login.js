@@ -31,6 +31,7 @@ async function signupFormHandler(event) {
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 
+    // if all fields are presented with data, make a request to add data to db
     if (firstName && lastName && username && email && password) {
         const response = await fetch('/api/users', {
             method: 'post',
@@ -44,9 +45,11 @@ async function signupFormHandler(event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
+        // if fetch request has no issues, return to homepage
         if (response.ok) {
             document.location.replace('/homepage/');
-        } else {
+        } 
+        else {
             alert(response.statusText);
         }
     }
