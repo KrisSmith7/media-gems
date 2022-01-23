@@ -16,8 +16,7 @@ async function loginFormHandler(event) {
 
         if (response.ok) {
             document.location.replace('/homepage/');
-        } 
-        else {
+        } else {
             alert(response.statusText);
         }
     }
@@ -37,8 +36,8 @@ async function signupFormHandler(event) {
         const response = await fetch('/api/users', {
             method: 'post',
             body: JSON.stringify({
-                first_name,
-                last_name,
+                firstName,
+                lastName,
                 username,
                 email,
                 password

@@ -33,20 +33,33 @@ router.get('/:id', (req, res) => {
     });
 });
 
+
 router.post('/', (req, res) => {
   // expects {first_name: 'Alex' last_name: 'Monde' user_name: 'A Monde', email: 'nwestnedge0@cbc.ca', password: 'password1234'}
+  console.log("in router post req: " + req.body);
   User.create({
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    user_name: req.body.user_name,
+    first_name:req.body.firstName,
+    last_name:req.body.lastName,
+    user_name: req.body.username,
     email: req.body.email,
     password: req.body.password
   })
-    .then(userData => res.json(userData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  // .then(dbUserData => {
+  //   req.session.save(() => {
+  //     req.session.user_id = dbUserData.id;
+  //     req.session.username = dbUserData.username;
+  //     req.session.loggedIn = true;
+
+  //     res.json(dbUserData);
+  //   });
+  // })
+  .then((tag) => {
+    res.status(200).json(tag);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.post('/login', (req, res) => {
@@ -67,10 +80,27 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.username = userData.user_name;
+      req.session.loggedIn = true;
     // TODO: Add last_visited date to User table here??
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
+});
+});
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
 });
 
 router.put('/:id', (req, res) => {
