@@ -14,23 +14,23 @@ router.get('/', (req, res) => {
         'title',
         'review_text'
       ],
-  //     include: [
-  //       {
-  //         model: User,
-  //         attributes: ['first_name', 'last_name']
-  //   },
-  //       {
-  //         model: Service,
-  //         attributes: ['service_name']
-  //   }
-  // ]
-})
-      .then(dbReviewData => res.json(dbReviewData))
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+      include: [
+      {
+         model: User,
+         attributes: ['user_name']
+      },
+      {
+        model: Service,
+         attributes: ['service_name']
+      }
+      ]
+  })
+  .then(dbReviewData => res.json(dbReviewData))
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
   });
+});
 
 //create a comment
 router.post('/', (req, res) => {

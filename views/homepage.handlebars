@@ -253,6 +253,7 @@
 
                                         <tbody class="bg-white">
                                             <!--contains template for one full dashboard entry-->
+                                            {{#each reviews}}
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="flex items-center">
@@ -265,34 +266,35 @@
 
                                                         <div>
                                                             <div class="text-sm leading-5 font-medium text-gray-900">
-                                                                Ozark {{review.title}}
+                                                                {{title}}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-500">Netflix</div>
+                                                    <div class="text-sm leading-5 text-gray-500">{{service_name}}</div>
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div
                                                         class="p-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        OMG! The show returns tomorrow and I'm so excited!</div>
+                                                        {{review_text}}
+                                                    </div>
                                                 </td>
 
                                                 <td
                                                     class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    username123 {{user.username}}</td>
+                                                    {{user_name}}</td>
 
                                                 <td
                                                     class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                                                     <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
                                                 </td>
                                             </tr>
-
+                                            {{/each}}
                                             <!--Next entry below-->
-
+{{!-- 
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="flex items-center">
@@ -358,7 +360,7 @@
                                                     class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                                                     <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <!--end of table rows-->
                                         </tbody>
                                     </table>
