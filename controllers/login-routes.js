@@ -5,13 +5,13 @@ const Service = require('../models/Service')
 
 router.get('/', (req, res) => {
     res.render('login');
-  });
+});
+
 router.get('/login', (req, res) => {
-    res.render('login');
-  });
+  res.render('login');
+});
 
 router.get('/homepage', (req, res) => {
-  console.log("doing findall");
   Review.findAll({
     attributes: [
       'id',
@@ -30,9 +30,7 @@ router.get('/homepage', (req, res) => {
     ]
   })
     .then(reviewData => {
-      console.log("got review data");
       const reviews = reviewData.map(review => review.get({ plain: true }));
-      console.log(reviews);
       res.render('homepage', { reviews });
     })
     .catch(err => {

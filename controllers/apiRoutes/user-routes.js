@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Review, Visited } = require('../../models');
+const sequelize = require('../../config/connection');
 
 // get all users
 router.get('/', (req, res) => {
@@ -85,7 +86,6 @@ router.post('/login', (req, res) => {
       req.session.user_id = userData.id;
       req.session.username = userData.user_name;
       req.session.loggedIn = true;
-    // TODO: Add last_visited date to User table here??
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
@@ -94,6 +94,9 @@ router.post('/login', (req, res) => {
 
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
+    // Add last_visited date to User table
+    User.update( {last_visit : sequelize.literal('CURRENT_TIMESTAMP') }, { where: {id: req.session.user_id } });
+
     req.session.destroy(() => {
       res.status(204).end();
     });
