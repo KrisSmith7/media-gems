@@ -75,9 +75,29 @@ router.get('/login', (req, res) => {
 
 
 
-  router.get('/user', (req, res) => {
-    res.render('user');
+  router.get('/user/:id', (req, res) => {
+    User.findOne({
+      attributes: { exclude: ['password'] },
+      where: {
+        id: req.params.id
+      }
+    })
+      .then(userData => {
+        if (!userData) {
+          res.status(404).json({ message: 'No user found with this id' });
+          return;
+        }
+        console.log(userData)
+        const singleUser = userData.get({ plain: true });
+        res.render('single-user', {singleUser});
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   });
+
+  
   router.get('/logout', (req, res) => {
     res.render('logout');
   });
