@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Review, Visited } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // get all users
 router.get('/', (req, res) => {
@@ -44,15 +45,15 @@ router.post('/', (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-  // .then(dbUserData => {
-  //   req.session.save(() => {
-  //     req.session.user_id = dbUserData.id;
-  //     req.session.username = dbUserData.username;
-  //     req.session.loggedIn = true;
+  .then(dbUserData => {
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.user_name;
+      req.session.loggedIn = true;
 
-  //     res.json(dbUserData);
-  //   });
-  // })
+      res.json(dbUserData);
+    });
+  })
   .then((tag) => {
     res.status(200).json(tag);
   })
@@ -62,6 +63,7 @@ router.post('/', (req, res) => {
   });
 });
 
+
 router.post('/login', (req, res) => {
   // expects {email: 'nwestnedge0@cbc.ca', password: 'password1234'}
   User.findOne({
@@ -69,32 +71,36 @@ router.post('/login', (req, res) => {
       email: req.body.email
     }
   }).then(userData => {
+    // console.log(userData)
     if (!userData) {
       res.status(400).json({ message: 'No user with that email address!' });
       return;
     }
-
+    
     const validPassword =  userData.checkPassword(req.body.password);
-
+    
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
-
+  
+    
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.user_name;
       req.session.loggedIn = true;
-    // TODO: Add last_visited date to User table here??
-
-    res.json({ user: userData, message: 'You are now logged in!' });
-  });
-});
+      // TODO: Add last_visited date to User table here??
+      
+      res.json({ user: userData, message: 'You are now logged in!' });
+    });
+  }
+  );
 });
 
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
-    req.session.destroy(() => {
+    req.session.destroy(
+      () => {
       res.status(204).end();
     });
   }
@@ -102,6 +108,7 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
 
 router.put('/:id', (req, res) => {
 

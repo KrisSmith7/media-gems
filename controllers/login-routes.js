@@ -2,15 +2,20 @@ const router = require('express').Router();
 const Review = require('../models/Review');
 const Service = require('../models/Service');
 const User = require('../models/User');
+const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
-    res.render('login');
-  });
-router.get('/login', (req, res) => {
-    res.render('login');
+  // console.log(req.session);
+  if (req.session.loggedIn) {
+    res.redirect('homepage');
+    return;
+  }
+    res.render('/');
   });
 
-  router.get('/homepage', (req, res) => {
+  router.get('/homepage', withAuth, (req, res) => {
+    // console.log(req.session);
+    console.log('======================');
     Review.findAll({
       // where: {
       //   user_id: req.params.user_id
@@ -33,8 +38,9 @@ router.get('/login', (req, res) => {
 })
       .then(dbReviewData => {
         const homepageReviews = dbReviewData.map(review => review.get({ plain: true }));
-        console.log(dbReviewData);
-        res.render('homepage',{homepageReviews});
+        res.render('homepage',{
+          homepageReviews,
+          loggedIn:req.session.loggedIn});
       })
       .catch(err => {
         console.log(err);
@@ -43,11 +49,11 @@ router.get('/login', (req, res) => {
   });
   
 
-  router.get('/reviews', (req, res) => {
+  router.get('/reviews', withAuth,  (req, res) => {
      Review.findAll({
-      // where: {
-      //   user_id: req.params.user_id
-      // },
+      where: {
+        user_id: req.session.user_id
+      },
       attributes: [
         'id',
         'title',
@@ -75,7 +81,7 @@ router.get('/login', (req, res) => {
 
 
 
-  router.get('/user/:id', (req, res) => {
+  router.get('/user/:id', withAuth, (req, res) => {
     User.findOne({
       attributes: { exclude: ['password'] },
       where: {
@@ -89,7 +95,9 @@ router.get('/login', (req, res) => {
         }
         console.log(userData)
         const singleUser = userData.get({ plain: true });
-        res.render('single-user', {singleUser});
+        res.render('single-user', {
+          singleUser,
+        loggedIn:req.session.loggedIn});
       })
       .catch(err => {
         console.log(err);
@@ -98,8 +106,15 @@ router.get('/login', (req, res) => {
   });
 
   
-  router.get('/logout', (req, res) => {
-    res.render('logout');
+  router.get('/user/logout', (req, res) => {
+    if (req.session.loggedIn) {
+      req.session.destroy(() => {
+        res.status(204).end();
+      });
+    }
+    else {
+      res.status(404).end();
+    }
   });
 
 

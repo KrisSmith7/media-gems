@@ -4,26 +4,27 @@ const router = require('express').Router();
     
 const Review = require('../../models/Review');
 const User = require('../../models/User');
-const Service = require('../../models/Service')
+const Service = require('../../models/Service');
+const withAuth = require('../../utils/auth');
 
 //get all comments
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
     Review.findAll({
       attributes: [
         'id',
         'title',
         'review_text'
       ],
-  //     include: [
-  //       {
-  //         model: User,
-  //         attributes: ['first_name', 'last_name']
-  //   },
-  //       {
-  //         model: Service,
-  //         attributes: ['service_name']
-  //   }
-  // ]
+      include: [
+        {
+          model: User,
+          attributes: ['user_name']
+    },
+        {
+          model: Service,
+          attributes: ['service_name']
+    }
+  ]
 })
       .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
@@ -32,7 +33,7 @@ router.get('/', (req, res) => {
       });
   });
 
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
     Review.findAll({
       // where: {
       //   user_id: req.params.user_id
@@ -61,7 +62,7 @@ router.get('/', (req, res) => {
   });
 
 //create a comment
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
     Review.create({
       title: req.body.title,
@@ -77,7 +78,7 @@ router.post('/', (req, res) => {
   });
 
 //delete a comment
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Review.destroy({
       where: {
         id: req.params.id
