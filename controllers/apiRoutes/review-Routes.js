@@ -32,6 +32,34 @@ router.get('/', (req, res) => {
       });
   });
 
+router.get('/', (req, res) => {
+    Review.findAll({
+      // where: {
+      //   user_id: req.params.user_id
+      // },
+      attributes: [
+        'id',
+        'title',
+        'review_text'
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['service_name']
+    }]
+})
+      .then(dbReviewData => {
+        const reviews = dbReviewData.map(review => review.get({ plain: true }));
+        console.log(dbReviewData)
+        res.render('reviews', 
+        {reviews});
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
 //create a comment
 router.post('/', (req, res) => {
     // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}

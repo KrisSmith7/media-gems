@@ -1,40 +1,40 @@
-                                            <tr>
+                                       {{#each reviews as |review|}}
+                                       
+                                          <tr>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="flex items-center">
-                                                        <!--the below lines host rounded images if we decide to use-->
-                                                        {{!-- <div class="flex-shrink-0 h-10 w-10">
-                                                            <img class="h-10 w-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                                                                alt="">
-                                                        </div> --}}
-
+                                                     
                                                         <div>
                                                             <div class="text-sm leading-5 font-medium text-gray-900">
-                                                                {{review.title}}
+                                                                {{title}}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-500">{{review.service_id}}</div>
+                                                    <div class="text-sm leading-5 text-gray-500">{{service.service_name}}</div>
                                                 </td>
 
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div
                                                         class="p-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        {{review_text}}</div>
+                                                        {{review_text}}
+                                                        </div>
                                                 </td>
 
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                  {{user.username}}</td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                                    <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
+                                              
+                                            <td
+                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
+                                                    <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                                 </td>
-                                            </tr>
+                                                <td>
+      <button class="delete-review-btn bg-red-500 hover:bg-red-700 text-white text-xs font-bold ml-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Delete
+      </button>
+      </td>
+      </tr>
+      {{/each}}
 
 
 
@@ -42,9 +42,7 @@
 
 
 
-
-
-
+{{!-- 
 <article class="post">
   <div class="title">
     <a href="{{post_url}}" target="_blank">{{title}}</a>
@@ -55,4 +53,4 @@
     |
     <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
   </div>
-</article>
+</article> --}}
