@@ -191,112 +191,11 @@
 
                                         <tbody class="bg-white">
                                             <!--contains template for one full dashboard entry-->
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="flex items-center">
-                                                        <!--the below lines host rounded images if we decide to use-->
-                                                        {{!-- <div class="flex-shrink-0 h-10 w-10">
-                                                            <img class="h-10 w-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                                                                alt="">
-                                                        </div> --}}
-
-                                                        <div>
-                                                            <div class="text-sm leading-5 font-medium text-gray-900">
-                                                                Ozark {{review.title}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-500">Netflix</div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div
-                                                        class="p-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        OMG! The show returns tomorrow and I'm so excited!</div>
-                                                </td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    username123 {{user.username}}</td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                                    <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
-                                                </td>
-                                            </tr>
-
-                                            <!--Next entry below-->
-
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="flex items-center">
-
-                                                        <div>
-                                                            <div class="text-sm leading-5 font-medium text-gray-900">
-                                                                The Office {{review.title}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-500">Peacock</div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div
-                                                        class="p-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        My comfort show. We watch it every night and fully quote every episode. Gotta watch!</div>
-                                                </td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    newuser456 {{user.username}}</td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                                    <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
-                                                </td>
-                                            </tr>
-
-
-                                            <!--Next entry below-->
-
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="flex items-center">
-
-                                                        <div>
-                                                            <div class="text-sm leading-5 font-medium text-gray-900">
-                                                                The Morning Show{{review.title}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-500">Apple TV {{service.service_name}}</div>
-                                                </td>
-
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div
-                                                        class="p-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        Livinggg for the drama. Bradley and Laura are so cute!</div>
-                                                </td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    thisuser789 {{user.username}}</td>
-
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                                    <a href="/reviews" class="text-indigo-600 hover:text-indigo-900">Reply</a>
-                                                </td>
-                                            </tr>
+                                            {{#each homepageReviews as |homepageReview|}}
+                                            {{> homepage-reviews homepageReview}}
+                                       
+                                            {{/each}}
+                                
                                             <!--end of table rows-->
                                         </tbody>
                                     </table>

@@ -10,20 +10,26 @@ const reviewData = [
 
     {
       title: 'The Office',
-      review_text: 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.',
+      review_text: ' My comfort show. We watch it every night and fully quote every episode. Gotta watch!',
       user_id: 2,
       service_id: 2
     },
     {
       title: 'The Morning Show',
-      review_text: 'In hac habitasse platea dictumst.',
+      review_text: 'Livinggg for the drama. Bradley and Laura are so cute!',
       user_id: 3,
       service_id: 1
     },
     {
       title: 'The Resident',
-      review_text: 'Nunc rhoncus dui vel sem.',
+      review_text: 'In love with all the staff. Each episode gets me!',
       user_id: 4,
+      service_id: 3
+    },
+    {
+      title: 'Ozark',
+      review_text: 'NOT READY FOR IT TO END. THIS SHOW IS NUTSSSS!',
+      user_id: 1,
       service_id: 3
     },
 ]
