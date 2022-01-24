@@ -1,9 +1,10 @@
 async function newFormHandler(event) {
     event.preventDefault();
   
-    const title = document.querySelector('input[name="review-title"]').value;
-    const review_text = document.querySelector('input[name="review-text"]').value;
-    // const user_id = document.querySelector('')
+    const title = document.querySelector('#review-title').value;
+    const review_text = document.querySelector('#review-text').value;
+    const service_id = document.querySelector('#media-service').value;
+   
   
 // is review text appropriate for the variable? => just_tech_news uses a post url here instead
 
@@ -11,7 +12,9 @@ async function newFormHandler(event) {
         method: 'POST',
         body: JSON.stringify({
             title,
-            review_text
+            review_text,
+            service_id
+            
     }),
         headers: {
             'Content-Type': 'application/json'
@@ -19,7 +22,7 @@ async function newFormHandler(event) {
     });
   
     if (response.ok) {
-        document.location.replace('/homepage');
+        document.location.replace('/reviews');
     } 
     else {
         alert(response.statusText);

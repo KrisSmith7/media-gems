@@ -8,7 +8,7 @@ const Service = require('../../models/Service');
 const withAuth = require('../../utils/auth');
 
 //get all comments
-router.get('/', withAuth, (req, res) => {
+router.get('/', (req, res) => {
     Review.findAll({
       attributes: [
         'id',
@@ -33,7 +33,8 @@ router.get('/', withAuth, (req, res) => {
       });
   });
 
-router.get('/', withAuth, (req, res) => {
+
+router.get('/', (req, res) => {
     Review.findAll({
       // where: {
       //   user_id: req.params.user_id
@@ -62,12 +63,12 @@ router.get('/', withAuth, (req, res) => {
   });
 
 //create a comment
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
     Review.create({
       title: req.body.title,
       review_text: req.body.review_text,
-      // user_id: req.session.user_id,
+      user_id: req.session.user_id,
       service_id: req.body.service_id // can we change this to make a selection of the values instead of id
     })
       .then(dbReviewData => res.json(dbReviewData))
@@ -78,7 +79,7 @@ router.post('/', withAuth, (req, res) => {
   });
 
 //delete a comment
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', (req, res) => {
     Review.destroy({
       where: {
         id: req.params.id

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Review = require('../models/Review');
 const Service = require('../models/Service');
 const User = require('../models/User');
+const Visited = require('../models/Visited');
 const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
@@ -10,7 +11,7 @@ router.get('/', (req, res) => {
     res.redirect('homepage');
     return;
   }
-    res.render('/');
+    res.render('login');
   });
 
   router.get('/homepage', withAuth, (req, res) => {
@@ -33,7 +34,7 @@ router.get('/', (req, res) => {
     {
       model: User,
       attributes: ['user_name']
-    }
+    },
   ]
 })
       .then(dbReviewData => {
@@ -64,6 +65,10 @@ router.get('/', (req, res) => {
           model: Service,
           attributes: ['service_name']
     },
+        {
+          model: User,
+          attributes: ['user_name']
+    },
   ]
 })
       .then(dbReviewData => {
@@ -81,11 +86,11 @@ router.get('/', (req, res) => {
 
 
 
-  router.get('/user/:id', withAuth, (req, res) => {
+  router.get('/profile', withAuth, (req, res) => {
     User.findOne({
       attributes: { exclude: ['password'] },
       where: {
-        id: req.params.id
+        id: req.session.id
       }
     })
       .then(userData => {
@@ -106,7 +111,7 @@ router.get('/', (req, res) => {
   });
 
   
-  router.get('/user/logout', (req, res) => {
+  router.get('/users/logout', (req, res) => {
     if (req.session.loggedIn) {
       req.session.destroy(() => {
         res.status(204).end();
