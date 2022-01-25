@@ -18,9 +18,6 @@ router.get('/', (req, res) => {
     // console.log(req.session);
     console.log('======================');
     Review.findAll({
-      // where: {
-      //   user_id: req.params.user_id
-      // },
       attributes: [
         'id',
         'title',
@@ -83,10 +80,48 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
       });
   });
-  router.put('/reviews', withAuth,  (req, res) => {
-     Review.findAll({
+
+
+  router.get('/reviews/:id', (req, res) => {
+    Review.findOne({
       where: {
-        user_id: req.session.user_id
+        id: req.params.id
+      },
+      attributes: [
+        'id',
+        'review_text',
+        'title'
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'service_name'],
+        },
+      ]
+    })
+      .then(dbPostData => {
+        if (!dbPostData) {
+          res.status(404).json({ message: 'No review found with this id' });
+          return;
+        }
+  
+        const editReview = dbPostData.get({ plain: true });
+  
+        res.render('edit-review', 
+          editReview,
+          // loggedIn: req.session.loggedIn
+        );
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+  router.put('/reviews/:id', withAuth,  (req, res) => {
+     Review.findOne({
+      where: {
+        id: req.params.id
       },
       attributes: [
         'id',
@@ -96,18 +131,14 @@ router.get('/', (req, res) => {
       include: [
         {
           model: Service,
-          attributes: ['service_name']
-    },
-        {
-          model: User,
-          attributes: ['user_name']
+          attributes: ['id','service_name']
     },
   ]
 })
       .then(dbReviewData => {
-        const reviews = dbReviewData.map(review => review.get({ plain: true }));
+        const editingReview = dbReviewData.get({ plain: true });
         console.log(dbReviewData);
-        res.render('reviews',{reviews});
+        res.render('edit-review',editingReview);
       })
       .catch(err => {
         console.log(err);

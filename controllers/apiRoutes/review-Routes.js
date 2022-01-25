@@ -62,6 +62,33 @@ router.get('/:id', (req, res) => {
       });
   });
 
+  router.put('/:id', withAuth, (req, res) => {
+    Review.update(
+      {
+        title: req.body.title,
+        review_text: req.body.review_text,
+        service_id: req.body.service_id
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    )
+      .then(dbPostData => {
+        if (!dbPostData) {
+          res.status(404).json({ message: 'No review found with this id' });
+          return;
+        }
+        res.json(dbPostData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  
+
 //create a comment
 router.post('/', (req, res) => {
     // expects => {review_text: "This is the comment", user_id: 1, post_id: 2}
