@@ -55,9 +55,9 @@ router.post('/signup', (req, res) => {
       res.json(dbUserData);
     });
   })
-  .then((tag) => {
-    res.status(200).json(tag);
-  })
+  // .then((tag) => {
+  //   res.status(200).json(tag);
+  // })
   .catch((err) => {
     console.log(err);
     res.status(400).json(err);
