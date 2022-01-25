@@ -119,7 +119,7 @@ router.get('/', (req, res) => {
   });
 
   router.put('/reviews/:id', withAuth,  (req, res) => {
-     Review.findOne({
+     Review.update({
       where: {
         id: req.params.id
       },
@@ -131,7 +131,7 @@ router.get('/', (req, res) => {
       include: [
         {
           model: Service,
-          attributes: ['id','service_name']
+          attributes: ['id']
     },
   ]
 })
@@ -150,7 +150,7 @@ router.get('/', (req, res) => {
 
 
 
-  router.get('/user/profile', (req, res) => {
+  router.get('user/', (req, res) => {
     User.findOne({
       attributes: { exclude: ['password'] },
       where: {

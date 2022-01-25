@@ -5,16 +5,15 @@ async function editFormHandler(event) {
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
-    const edit_title = document.querySelector('#edit-title').value;
+    const edit_title = document.querySelector('#edit-title').value.trim();
     const edit_text = document.querySelector('#edit-text').value;
-    const edit_service = document.querySelector('#edit-service').value;
+    const edit_service = document.querySelector('#edit-service').value.trim();
    
 
     // fetch request for particular review via id => edit the review
     const response = await fetch(`/api/reviews/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
-            id,
             edit_title,
             edit_text,
             edit_service
@@ -26,7 +25,7 @@ async function editFormHandler(event) {
     });
   
     if (response.ok) {
-        document.location.replace('/reviews/');
+        document.location.replace('/reviews');
     } 
     else {
         alert(response.statusText);
@@ -34,4 +33,4 @@ async function editFormHandler(event) {
 }
 
 // Change the class name in the css/tailwind
-document.querySelector('#edit-reviews-btn').addEventListener('submit', editFormHandler);
+document.querySelector('#edit-reviews-btn').addEventListener('click', editFormHandler);

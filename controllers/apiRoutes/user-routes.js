@@ -136,7 +136,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
-      id: req.params.id
+      id: req.session.user_id
     }
   })
     .then(userData => {

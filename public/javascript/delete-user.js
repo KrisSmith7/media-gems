@@ -1,4 +1,4 @@
-async function deleteFormHandler(event) {
+async function deleteUserHandler(event) {
     event.preventDefault();
   
     // in the url, split the location into an array, use everything before the first /
@@ -7,13 +7,13 @@ async function deleteFormHandler(event) {
     ];
 
     // make a fetch request to a particular review based on id
-    const response = await fetch(`/api/reviews/${id}`, {
+    const response = await fetch(`/api/users/${id}`, {
         // delete the particular review that was found
-        method: 'DELETE'
+        method: 'DELETE',
     });
   
     if (response.ok) {
-        document.location.replace('/reviews/');
+        document.location.replace('/');
     } 
     else {
         alert(response.statusText);
@@ -21,4 +21,4 @@ async function deleteFormHandler(event) {
 }
   
 // need to implement the following class name in css/tailwind to change the button for deleting
-document.querySelector('.delete-review-btn').addEventListener('click', deleteFormHandler);
+document.querySelector('.delete-review-btn').addEventListener('click', deleteUserHandler);

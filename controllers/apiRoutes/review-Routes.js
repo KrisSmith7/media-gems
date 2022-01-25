@@ -65,9 +65,10 @@ router.get('/:id', (req, res) => {
   router.put('/:id', withAuth, (req, res) => {
     Review.update(
       {
-        title: req.body.title,
-        review_text: req.body.review_text,
-        service_id: req.body.service_id
+        title: req.body.edit_title,
+        review_text: req.body.edit_text,
+        user_id: req.session.user_id,
+        service_id: req.body.edit_service
       },
       {
         where: {
