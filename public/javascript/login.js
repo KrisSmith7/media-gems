@@ -33,7 +33,7 @@ async function signupFormHandler(event) {
 
     // if all fields are presented with data, make a request to add data to db
     if (firstName && lastName && username && email && password) {
-        const response = await fetch('/api/users', {
+        const response = await fetch('/api/users/signup', {
             method: 'post',
             body: JSON.stringify({
                 firstName,

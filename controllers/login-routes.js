@@ -2,15 +2,21 @@ const router = require('express').Router();
 const Review = require('../models/Review');
 const Service = require('../models/Service');
 const User = require('../models/User');
+const Visited = require('../models/Visited');
+const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
-    res.render('login');
-  });
-router.get('/login', (req, res) => {
+  // console.log(req.session);
+  if (req.session.loggedIn) {
+    res.redirect('homepage');
+    return;
+  }
     res.render('login');
   });
 
-  router.get('/homepage', (req, res) => {
+  router.get('/homepage', withAuth, (req, res) => {
+    // console.log(req.session);
+    console.log('======================');
     Review.findAll({
       // where: {
       //   user_id: req.params.user_id
@@ -27,14 +33,17 @@ router.get('/login', (req, res) => {
     },
     {
       model: User,
-      attributes: ['user_name']
-    }
+      attributes: ['user_name', 'last_visit']
+    },
   ]
 })
       .then(dbReviewData => {
         const homepageReviews = dbReviewData.map(review => review.get({ plain: true }));
-        console.log(dbReviewData);
-        res.render('homepage',{homepageReviews});
+        res.render('homepage',{
+          homepageReviews,
+          username:req.session.username,
+          // last_visit: us.last_visit,
+          loggedIn:req.session.loggedIn});
       })
       .catch(err => {
         console.log(err);
@@ -43,11 +52,11 @@ router.get('/login', (req, res) => {
   });
   
 
-  router.get('/reviews', (req, res) => {
+  router.get('/reviews', withAuth,  (req, res) => {
      Review.findAll({
-      // where: {
-      //   user_id: req.params.user_id
-      // },
+      where: {
+        user_id: req.session.user_id
+      },
       attributes: [
         'id',
         'title',
@@ -57,6 +66,41 @@ router.get('/login', (req, res) => {
         {
           model: Service,
           attributes: ['service_name']
+    },
+        {
+          model: User,
+          attributes: ['user_name']
+    },
+  ]
+})
+      .then(dbReviewData => {
+        const reviews = dbReviewData.map(review => review.get({ plain: true }));
+        console.log(dbReviewData);
+        res.render('reviews',{reviews});
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  router.put('/reviews', withAuth,  (req, res) => {
+     Review.findAll({
+      where: {
+        user_id: req.session.user_id
+      },
+      attributes: [
+        'id',
+        'title',
+        'review_text'
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['service_name']
+    },
+        {
+          model: User,
+          attributes: ['user_name']
     },
   ]
 })
@@ -89,7 +133,9 @@ router.get('/login', (req, res) => {
         }
         console.log(userData)
         const singleUser = userData.get({ plain: true });
-        res.render('profile', singleUser);
+        res.render('profile', 
+        singleUser)
+        // loggedIn: req.session.loggedIn);
       })
       .catch(err => {
         console.log(err);
@@ -98,8 +144,15 @@ router.get('/login', (req, res) => {
   });
 
   
-  router.get('/logout', (req, res) => {
-    res.render('logout');
+  router.get('/users/logout', (req, res) => {
+    if (req.session.loggedIn) {
+      req.session.destroy(() => {
+        res.status(204).end();
+      });
+    }
+    else {
+      res.status(404).end();
+    }
   });
 
 
