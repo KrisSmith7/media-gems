@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
         res.render('homepage',{
           homepageReviews,
           username:req.session.username,
-          // last_visit: us.last_visit,
+          last_visit:req.session.last_visit,
           loggedIn:req.session.loggedIn});
       })
       .catch(err => {
