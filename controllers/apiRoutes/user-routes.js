@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const { User, Review, Visited } = require('../../models');
+const withAuth = require('../../utils/auth');
+const sequelize = require('../../config/connection');
+const moment = require('moment');
 
 // get all users
 router.get('/', (req, res) => {
@@ -18,17 +21,7 @@ router.get('/:id', (req, res) => {
     attributes: { exclude: ['password'] },
     where: {
       id: req.params.id
-    },
-    include: [
-      {
-        model: Review,
-        attributes: ['id', 'title', 'review_text', 'user_id', 'service_id']
-      },
-      {
-        model: Visited,
-        attributes: ['id', 'user_id', 'last_visit'],
-      }
-    ]
+    }
   })
     .then(userData => {
       if (!userData) {
@@ -43,45 +36,87 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+
+router.post('/signup', (req, res) => {
+  // expects {first_name: 'Alex' last_name: 'Monde' user_name: 'A Monde', email: 'nwestnedge0@cbc.ca', password: 'password1234'}
+  console.log("in router post req: " + req.body);
   User.create({
-    username: req.body.username,
+    first_name:req.body.firstName,
+    last_name:req.body.lastName,
+    user_name: req.body.username,
     email: req.body.email,
     password: req.body.password
   })
-    .then(userData => res.json(userData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+  .then(dbUserData => {
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.user_name;
+      req.session.loggedIn = true;
+      let formattedDate = moment.parseZone(userData.last_visit).local().format('MM/DD/YYYY');
+      req.session.last_visit = formattedDate;
+
+      res.json(dbUserData);
     });
+  })
+  // .then((tag) => {
+  //   res.status(200).json(tag);
+  // })
+  .catch((err) => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
+
 router.post('/login', (req, res) => {
-  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+  // expects {email: 'nwestnedge0@cbc.ca', password: 'password1234'}
   User.findOne({
     where: {
       email: req.body.email
     }
   }).then(userData => {
+    // console.log(userData)
     if (!userData) {
       res.status(400).json({ message: 'No user with that email address!' });
       return;
     }
-
+    
     const validPassword =  userData.checkPassword(req.body.password);
-
+    
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
+  
+    
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.username = userData.user_name;
+      req.session.loggedIn = true;
+      let formattedDate = moment.parseZone(userData.last_visit).local().format('MM/DD/YYYY');
+      req.session.last_visit = formattedDate;
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
 });
+});
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    // Add last_visited date to User table
+    User.update( {last_visit : sequelize.literal('CURRENT_TIMESTAMP') }, { where: {id: req.session.user_id } });
+
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
+});
+
 
 router.put('/:id', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
@@ -106,7 +141,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
-      id: req.params.id
+      id: req.session.user_id
     }
   })
     .then(userData => {
