@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User, Review, Visited } = require('../../models');
 const withAuth = require('../../utils/auth');
 const sequelize = require('../../config/connection');
+const moment = require('moment');
 
 // get all users
 router.get('/', (req, res) => {
@@ -51,6 +52,8 @@ router.post('/signup', (req, res) => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.user_name;
       req.session.loggedIn = true;
+      let formattedDate = moment.parseZone(userData.last_visit).local().format('MM/DD/YYYY');
+      req.session.last_visit = formattedDate;
 
       res.json(dbUserData);
     });
@@ -90,6 +93,8 @@ router.post('/login', (req, res) => {
       req.session.user_id = userData.id;
       req.session.username = userData.user_name;
       req.session.loggedIn = true;
+      let formattedDate = moment.parseZone(userData.last_visit).local().format('MM/DD/YYYY');
+      req.session.last_visit = formattedDate;
 
     res.json({ user: userData, message: 'You are now logged in!' });
   });
