@@ -75,11 +75,11 @@ router.get('/login', (req, res) => {
 
 
 
-  router.get('/user/:id', (req, res) => {
+  router.get('/user/profile', (req, res) => {
     User.findOne({
       attributes: { exclude: ['password'] },
       where: {
-        id: req.params.id
+        id: req.session.user_id
       }
     })
       .then(userData => {
@@ -89,7 +89,7 @@ router.get('/login', (req, res) => {
         }
         console.log(userData)
         const singleUser = userData.get({ plain: true });
-        res.render('single-user', {singleUser});
+        res.render('profile', singleUser);
       })
       .catch(err => {
         console.log(err);
