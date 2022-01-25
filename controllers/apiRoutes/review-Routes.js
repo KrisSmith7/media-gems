@@ -34,11 +34,11 @@ router.get('/', (req, res) => {
   });
 
 
-router.get('/', (req, res) => {
-    Review.findAll({
-      // where: {
-      //   user_id: req.params.user_id
-      // },
+router.get('/:id', (req, res) => {
+    Review.findOne({
+      where: {
+        id: req.params.id
+      },
       attributes: [
         'id',
         'title',

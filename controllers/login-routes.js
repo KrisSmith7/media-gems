@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
     },
     {
       model: User,
-      attributes: ['user_name']
+      attributes: ['user_name', 'last_visit']
     },
   ]
 })
@@ -41,6 +41,8 @@ router.get('/', (req, res) => {
         const homepageReviews = dbReviewData.map(review => review.get({ plain: true }));
         res.render('homepage',{
           homepageReviews,
+          username:req.session.username,
+          // last_visit: us.last_visit,
           loggedIn:req.session.loggedIn});
       })
       .catch(err => {
@@ -51,6 +53,37 @@ router.get('/', (req, res) => {
   
 
   router.get('/reviews', withAuth,  (req, res) => {
+     Review.findAll({
+      where: {
+        user_id: req.session.user_id
+      },
+      attributes: [
+        'id',
+        'title',
+        'review_text'
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['service_name']
+    },
+        {
+          model: User,
+          attributes: ['user_name']
+    },
+  ]
+})
+      .then(dbReviewData => {
+        const reviews = dbReviewData.map(review => review.get({ plain: true }));
+        console.log(dbReviewData);
+        res.render('reviews',{reviews});
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  router.put('/reviews', withAuth,  (req, res) => {
      Review.findAll({
       where: {
         user_id: req.session.user_id

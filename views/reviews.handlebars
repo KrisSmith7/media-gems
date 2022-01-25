@@ -1,10 +1,10 @@
 {{>sidebar}}
-<div class="flex flex-col mt-8">
+{{!-- <div class="flex flex-col mt-8">
   <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
     <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-      
+       --}}
 
-      <div class="w-full max-w-xs">
+      {{!-- <div class="w-1/2 max-w-xs"> --}}
   <form class="new-review-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="review-title">
@@ -39,6 +39,41 @@
   </form>
 </div>
                  
+
+                    {{!-- <div class="w-1/2 max-w-xs"> --}}
+  <form class="edit-review-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="review-title">
+       Edit Title
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="edit-title" id="edit-title" type="text" placeholder="Title of show/movie">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="media-service">
+        Which streaming service:
+      </label>
+          <select id="edit-service" class="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value>Select one...</option>
+                        <option class="media_selection" value="1">Apple TV+</option>
+                        <option class="media_selection" value="2">Peacock</option>
+                        <option class="media_selection" value="3">Hulu</option>
+                        <option class="media_selection" value="4">Netflix</option>
+                        <option class="media_selection" value="5">HBO Max</option>
+                    </select>
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="edit text">
+        Edit review:
+      </label>
+      <input class="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="edit-text" type="text" placeholder="Type your review here. Max: 255 characters.">
+    </div>
+    <div class="flex items-center justify-between">
+      <button class="edit-reviews-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Finished Edit
+      </button>
+    </div>
+  </form>
+</div>
 <div>
   
                         <div class="flex flex-col mt-8">
@@ -81,3 +116,5 @@
 </div>
 
 <script src="/javascript/add-review.js"></script>
+<script src="/javascript/edit-review.js"></script>
+<script src="/javascript/delete-review.js"></script>
