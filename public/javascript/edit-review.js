@@ -26,4 +26,4 @@ async function editFormHandler(event) {
 }
 
 // Change the class name in the css/tailwind
-document.querySelector('.edit-post-form').addEventListener('submit', editFormHandler);
+document.querySelector('.edit-reviews-btn').addEventListener('submit', editFormHandler);
