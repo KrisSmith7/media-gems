@@ -20,7 +20,8 @@
     "express-session": "^1.17.2",
     "moment": "^2.29.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.13.0"
+    "sequelize": "^6.13.0",
+    "tailgrids": "^1.1.3"
   },
   "devDependencies": {
     "tailwindcss": "^3.0.15"
