@@ -126,20 +126,18 @@ router.get('/', (req, res) => {
       attributes: [
         'id',
         'title',
-        'review_text'
+        'review_text',
+        'service_id'
       ],
-      include: [
-        {
-          model: Service,
-          attributes: ['id']
-    },
-  ]
 })
-      .then(dbReviewData => {
-        const editingReview = dbReviewData.get({ plain: true });
-        console.log(dbReviewData);
-        res.render('edit-review',editingReview);
-      })
+.then(dbPostData => {
+  if (!dbPostData) {
+    res.status(404).json({ message: 'No post found with this id' });
+    return;
+  }
+  res.json(dbPostData);
+  res.render('edit-review');
+})
       .catch(err => {
         console.log(err);
         res.status(500).json(err);

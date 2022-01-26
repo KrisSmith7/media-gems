@@ -32,5 +32,6 @@ async function editFormHandler(event) {
     }
 }
 
+
 // Change the class name in the css/tailwind
 document.querySelector('#edit-reviews-btn').addEventListener('click', editFormHandler);
