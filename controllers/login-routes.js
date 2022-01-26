@@ -3,6 +3,7 @@ const Review = require('../models/Review');
 const Service = require('../models/Service');
 const User = require('../models/User');
 const Visited = require('../models/Visited');
+const Watchlist = require('../models/Watchlist');
 const withAuth = require('../utils/auth');
 
 router.get('/', (req, res) => {
@@ -146,6 +147,42 @@ router.get('/', (req, res) => {
  
 
 
+  router.get('/mywatchlist', withAuth,  (req, res) => {
+    Watchlist.findAll({
+     where: {
+       user_id: req.session.user_id
+     },
+     include: [
+  //      {
+  //        model: Service,
+  //        attributes: ['service_name']
+  //  },
+  //      {
+  //        model: Review,
+  //        attributes: ['title']
+  //  },
+  //      {
+  //        model: User,
+  //        attributes: ['user_name']
+  //  },
+ ]
+})
+     .then(dbListData => {
+       const listOptions = dbListData.map(listItem => listItem.get({ plain: true }));
+       console.log(dbListData);
+       res.render('watchlist',{listOptions});
+     })
+     .catch(err => {
+       console.log(err);
+       res.status(500).json(err);
+     });
+ });
+
+
+
+
+
+
 
 
   router.get('user/', (req, res) => {
@@ -183,6 +220,8 @@ router.get('/', (req, res) => {
       res.status(404).end();
     }
   });
+
+
 
 
 module.exports = router;
