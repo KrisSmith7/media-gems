@@ -29,9 +29,13 @@ Services.hasMany(Reviews, {
 
 //trial associations for watchlist
 
-User.hasOne(Watchlist, {
+Watchlist.belongsTo(User, {
     foreignKey: 'user_id'
 });
+
+User.hasOne(Watchlist, {
+    foreignKey: 'user-id'
+})
 
 // Reviews.hasMany(Watchlist, {
 //     foreignKey:'title'
@@ -47,8 +51,8 @@ User.hasOne(Watchlist, {
 // });
 
 
-Reviews.belongsToMany(Watchlist, {through: ReviewService});
-Services.belongsToMany(Watchlist, {through: ReviewService});
+// Reviews.belongsToMany(Watchlist, {through: ReviewService});
+// Services.belongsToMany(Watchlist, {through: ReviewService});
 
 // Services.hasMany(Watchlist, {
 //     foreignKey: 'service'

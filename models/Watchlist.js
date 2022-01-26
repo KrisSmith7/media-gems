@@ -14,19 +14,19 @@ Watchlist.init(
       autoIncrement: true
     },
     title: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'review',
-        key: 'id'
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+          len: [1]
       }
     },
-    // service: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'service',
-    //     key: 'id'
-    //   },
-    // },
+    service: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+          len: [1]
+      }
+    },
 user_id: {
       type: DataTypes.INTEGER,
       references: {

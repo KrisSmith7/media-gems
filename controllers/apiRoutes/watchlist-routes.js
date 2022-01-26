@@ -37,11 +37,13 @@ router.get('/', (req, res) => {
 
 
 
-router.get('/', (req,res) =>{
+router.post('/', (req,res) =>{
 Watchlist.create(
     {
+      id: req.body.id,
        title: req.body.title,
-       service: req.body.service
+       service: req.body.service,
+       user_id: req.session.user_id,
     })
 .then(dbReviewData => res.json(dbReviewData))
       .catch(err => {
