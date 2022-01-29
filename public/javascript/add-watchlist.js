@@ -1,20 +1,3 @@
-// var a = document.querySelectorAll('.new-watchlist');
-// console.log(a)
-// for (var i = 0; i<a.length;i++) {
-//     a[i].addEventListener('click',function(){
-
-//      var b = a[i].offsetParent.parentElement.children[0].innerText;
-//     console.log(b);
-
-
-//     });
-// };
-
-// const id = document.querySelector(".new-watchlist").value
-
-
-
-
 async function newWatchHandler(event) {
     // event.preventDefault();
     const title = document.activeElement.offsetParent.parentElement.children[0].innerText
@@ -37,7 +20,7 @@ if (title&&service){
 });
 
 if (response.ok) {
-    console.log('added!');
+    alert('Added to Your Watchlist!');
 } 
 else {
     alert(response.statusText);
