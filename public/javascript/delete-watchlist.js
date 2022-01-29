@@ -1,5 +1,4 @@
-async function deleteFormHandler(event) {
-    // event.preventDefault();
+async function deleteFormHandler() {
     const id = document.activeElement.value
     
     // make a fetch request to a particular review based on id
