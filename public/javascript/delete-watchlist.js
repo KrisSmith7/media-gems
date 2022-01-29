@@ -16,6 +16,3 @@ async function deleteFormHandler(event) {
         alert(response.statusText);
     }
 }
-  
-// need to implement the following class name in css/tailwind to change the button for deleting
-// document.querySelector('.delete-watch-btn').addEventListener('click', deleteFormHandler);

@@ -1,5 +1,5 @@
-async function newWatchHandler(event) {
-    // event.preventDefault();
+async function newWatchHandler() {
+  
     const title = document.activeElement.offsetParent.parentElement.children[0].innerText
     const service = document.activeElement.offsetParent.parentElement.children[1].innerText
 
@@ -28,4 +28,3 @@ else {
 }
 
 }
-document.querySelector('.new-watchlist').addEventListener('click', newWatchHandler);
