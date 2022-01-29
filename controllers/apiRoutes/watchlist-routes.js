@@ -11,7 +11,7 @@ const withAuth = require('../../utils/auth');
 
 router.get('/', (req, res) => {
     Watchlist.findAll({
-      where: {user_id: req.session.id},
+      where: {user_id: req.session.user_id},
 // include: [
 //         {
 //           model: Review,

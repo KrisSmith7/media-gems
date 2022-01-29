@@ -28,7 +28,7 @@ async function editFormHandler(event) {
         document.location.replace('/reviews');
     } 
     else {
-        alert(response.statusText);
+        alert('Please be sure all fields are completed.');
     }
 }
 

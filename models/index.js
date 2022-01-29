@@ -37,27 +37,6 @@ User.hasOne(Watchlist, {
     foreignKey: 'user-id'
 })
 
-// Reviews.hasMany(Watchlist, {
-//     foreignKey:'title'
-// });
-
-// Watchlist.hasMany(Reviews, {
-//     foreignKey: 'service_id'
-// });
-
-
-// Watchlist.belongsTo(User, {
-//     foreignKey: 'user_id'
-// });
-
-
-// Reviews.belongsToMany(Watchlist, {through: ReviewService});
-// Services.belongsToMany(Watchlist, {through: ReviewService});
-
-// Services.hasMany(Watchlist, {
-//     foreignKey: 'service'
-// });
-
 
 // export models
 module.exports = {

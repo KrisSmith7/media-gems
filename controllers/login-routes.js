@@ -152,20 +152,6 @@ router.get('/', (req, res) => {
      where: {
        user_id: req.session.user_id
      },
-     include: [
-  //      {
-  //        model: Service,
-  //        attributes: ['service_name']
-  //  },
-  //      {
-  //        model: Review,
-  //        attributes: ['title']
-  //  },
-  //      {
-  //        model: User,
-  //        attributes: ['user_name']
-  //  },
- ]
 })
      .then(dbListData => {
        const listOptions = dbListData.map(listItem => listItem.get({ plain: true }));
@@ -177,12 +163,6 @@ router.get('/', (req, res) => {
        res.status(500).json(err);
      });
  });
-
-
-
-
-
-
 
 
   router.get('user/', (req, res) => {
