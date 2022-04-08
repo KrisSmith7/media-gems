@@ -1,7 +1,7 @@
 # Media Gems
 
 ## Description
-Media Gems is an application that allows authenticated users to select a streaming service and look at reviews for popular shows on that particular service. Users are able to add, edit, and delete any reviews that they have created.   
+Media Gems is an application that allows authenticated users to post and view reviews for popular shows/movies available on a variety of streaming services. Users are able to add, edit, and delete any reviews that they have created and add a show to their watchlist for future reference.   
 
 ## Table of Contents
 * [Installation](#install)
